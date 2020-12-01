@@ -26,5 +26,5 @@ jobs:
       if: ${{github.event_name == 'release'}}
       run: echo RELEASE!!!
     if: ${{github.event_name == 'release'}}
-      - name: 'attach artifacts to release page'
-        run: echo ECHO!!!
+    - name: 'attach artifacts to release page'
+      run: echo ECHO!!!
