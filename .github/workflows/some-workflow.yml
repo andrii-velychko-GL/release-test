@@ -27,10 +27,15 @@ jobs:
       run: echo RELEASE!!!
     - name: 'attach artifacts to release page'  
       if: ${{github.event_name == 'release'}}
-      uses: svenstaro/upload-release-action@v2
+      run:   |
+         upload_url=$(curl -sL https://api.github.com/repos/actions/checkout/releases/latest | jq -r '.upload_url')
+         echo ::set-env name=UPLOAD_URL::$upload_url
+      shell: bash
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ github.workspace }}\artifacts
-        asset_name: artifacts
-        tag: ${{ github.ref }}
-        overwrite: true
+        upload_url: ${{ env.UPLOAD_URL }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./my-artifact.zip
+        asset_name: my-artifact.zip
+        asset_content_type: application/zip
