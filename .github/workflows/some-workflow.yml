@@ -27,4 +27,9 @@ jobs:
       run: echo RELEASE!!!
     - name: 'attach artifacts to release page'
       if: ${{github.event_name == 'release'}}
-      run: echo RELEASE2!!!
+        uses: Roang-zero1/github-upload-release-artifacts-action@master
+        with:
+            args:
+            - my-artifact
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
