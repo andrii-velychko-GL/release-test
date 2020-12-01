@@ -25,6 +25,8 @@ jobs:
     - name: 'configure for release'
       if: ${{github.event_name == 'release'}}
       run: echo RELEASE!!!
-    if: ${{github.event_name == 'release'}}
-    - name: 'attach artifacts to release page'
-      run: echo ECHO!!!
+    - name: 'attach artifacts to release page'  
+      if: ${{github.event_name == 'release'}}
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
