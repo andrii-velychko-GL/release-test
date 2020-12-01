@@ -25,11 +25,14 @@ jobs:
     - name: 'configure for release'
       if: ${{github.event_name == 'release'}}
       run: echo RELEASE!!!
+    rules:
+    - if: ${{github.event_name == 'release'}}
+      when: always
+    - when: on_success
     - name: 'attach artifacts to release page'
-      if: ${{github.event_name == 'release'}}
-      uses: Roang-zero1/github-upload-release-artifacts-action@master
+    - uses: Roang-zero1/github-upload-release-artifacts-action@master
       with:
         args:
-          - my-artifact
+            - my-artifact
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
