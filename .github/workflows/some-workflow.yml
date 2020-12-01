@@ -14,13 +14,16 @@ jobs:
     runs-on: windows-latest
     # Use PAT on Windows instead of SSH
     steps:  
+    - uses: actions/checkout@v2
+    - run: mkdir -p artifact
+    - run: echo hello > artifact/world.txt
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: artifact/world.txt
+        
     - name: echo
-      run: echo "ECHO!!!"
+      run: echo ECHO!!!
     - name: 'configure for release'
       if: ${{github.event_name == 'release'}}
-      run: echo "RELEASE!!!"
-    - name: 'Upload artifacts'
-      uses: actions/upload-artifact@v2
-      with:
-        name: 'artifact_${{github.run_number}}'
-        path: D:\a\release-test\README.md
+      run: echo RELEASE!!!
