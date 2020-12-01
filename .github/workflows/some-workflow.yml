@@ -1,0 +1,29 @@
+name: 'Test'
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main, release/* ]
+  release:
+    types: [ published ]
+
+jobs:
+  job_win_build:
+    name: 'Windows build'
+    runs-on: windows-latest
+    # Use PAT on Windows instead of SSH
+    steps:  
+    - uses: actions/checkout@v2
+    - run: mkdir -p artifact
+    - run: echo hello > artifact/world.txt
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: artifact/world.txt
+        
+    - name: echo
+      run: echo ECHO!!!
+    - name: 'configure for release'
+      if: ${{github.event_name == 'release'}}
+      run: echo RELEASE!!!
