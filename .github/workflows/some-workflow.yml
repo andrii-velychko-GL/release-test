@@ -26,8 +26,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: 'list of files'
-      run: cd .\artifacts\
-      run: dir
+      run: |
+        cd .\artifacts\
+        dir
     - name: 'attach artifacts to release page'  
       if: ${{github.event_name == 'release'}}
       uses: actions/upload-release-asset@v1
