@@ -27,7 +27,11 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
     - name: 'list of files'
       run: |
-        cd .\artifacts\
+        cd ..
+        dir
+        cd ..
+        dir
+        cd ..
         dir
     - name: 'attach artifacts to release page'  
       if: ${{github.event_name == 'release'}}
