@@ -27,6 +27,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
     - name: 'list of files'
       run: |
+        dir ${{ github.workspace }}\artifacts\
         cd ..
         dir
         cd ..
@@ -40,6 +41,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}\artifacts\*
+        asset_path: ${{ github.workspace }}\artifacts\
         asset_name: my-artifact.zip
         asset_content_type: application/zip
